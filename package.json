@@ -7,7 +7,10 @@
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
-  "repository": "https://github.com/hyunahOh/Because-backend.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyunahOh/Because-backend.git"
+  },
   "author": "hyunahOh <dowkkr94@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -40,5 +43,10 @@
   },
   "devDependencies": {
     "eslint": "7.12.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/hyunahOh/Because-backend/issues"
+  },
+  "homepage": "https://github.com/hyunahOh/Because-backend#readme",
+  "description": ""
 }
