@@ -69,6 +69,6 @@ app
 - [nodemailer-mailgun-transport](https://github.com/orliesaurus/nodemailer-mailgun-transport) - Transport plugin that goes with nodemailer to send email
 - [python-shell](https://github.com/extrabacon/python-shell) - For Running Python scripts
 
-# Error Handling
+## Error Handling
 1. ```middleware/is-auth``` : Define Error Handling Middleware for Handling Jsonwebtoken's Authentication Error - 401 status code
 2. ```middleware/validator``` : Define Error Handling Middleware for Handling Mongoose's Validation Error - 422 status code
