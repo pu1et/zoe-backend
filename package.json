@@ -1,52 +1,29 @@
 {
-  "name": "backend",
+  "name": "zoe-backend",
   "version": "1.0.0",
+  "description": "To get the Node server running locally:   - Clone this repo   - ```npm install``` to install all required dependencies   -  Install MongoDB Community Edition ([instructions](https://docs.mongodb.com/manual/installation/#tutorials)) and run it by executing ```mongod```   -  ```npm run dev```  # Code Overview ## Project Structure ## Dependencies",
   "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.897.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.7",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "nodemailer": "^6.6.0",
+    "nodemailer-mailgun-transport": "^2.0.3",
+    "python-shell": "^3.0.0"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hyunahOh/Because-backend.git"
-  },
-  "author": "hyunahOh <dowkkr94@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "aws-sdk": "2.804.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "express-validator": "^6.6.1",
-    "fs": "0.0.1-security",
-    "https": "1.0.0",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "2.29.1",
-    "mongoose": "^5.10.5",
-    "multer": "1.4.2",
-    "multer-s3": "2.9.0",
-    "nodemailer": "^6.4.11",
-    "nodemailer-mailgun-transport": "2.0.2",
-    "nodemailer-sendgrid-transport": "^0.2.0",
-    "nodemon": "^2.0.4",
-    "passport": "^0.4.1",
-    "passport-facebook": "^3.0.0",
-    "passport-facebook-token": "4.0.0",
-    "passport-jwt": "4.0.0",
-    "passport-kakao": "1.0.0",
-    "passport-kakao-token": "0.1.5",
-    "passport-local": "1.0.0",
-    "python-shell": "2.0.3"
-  },
-  "devDependencies": {
-    "eslint": "7.12.0"
-  },
-  "bugs": {
-    "url": "https://github.com/hyunahOh/Because-backend/issues"
-  },
-  "homepage": "https://github.com/hyunahOh/Because-backend#readme",
-  "description": ""
+  "author": "",
+  "license": "ISC"
 }

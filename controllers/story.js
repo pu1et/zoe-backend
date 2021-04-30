@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator');
-const moment = require('moment');
 
 const Story = require('../models/story');
 const User = require('../models/user');
