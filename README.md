@@ -7,7 +7,7 @@ To get the Node server running locally:
 # Code Overview
 ## Project Structure
 ```
-zoe-backend
+app
  |  server.js         # App entry point
  |
  |- config            # Environment variables
@@ -54,29 +54,17 @@ zoe-backend
      └─ index.html
 ```
 ## Dependencies
-- aws-sdk - For Uploading Image to AWS S3
-- bcryptjs -
-- body-parser - 
-- dotenv - 
-- ejs
-- express
-- express-validator - 
-- fs - 
-- https - 
-- jsonwebtoken - 
-- moment - 
-- mongoose - 
-- multer - 
-- multer-s3
-- nodemailer
-- nodemailer-mailgun-transport
-- nodemailer-sendgrid-transport
-- nodemon
-- passport - 
-- passport-facebook - 
-- passport-facebook-token - 
-- passport-jwt
-- passport-kakao
-- passport-kakao-token - 
-- passport-local - 
-- python-shell - 
+- [aws-sdk](https://github.com/aws/aws-sdk-js) - AWS-SDK to allow access to AWS S3
+- [multer](https://github.com/expressjs/multer) - Middleware For Uploading Image file to AWS S3
+- [multer-s3](https://github.com/badunk/multer-s3) - Streaming multer storage engine for AWS S3
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js/) - For Encrypting passwords
+- [body-parser](https://github.com/expressjs/body-parser) - Middleware for Parsing incoming request bodies
+- [dotenv](https://github.com/motdotla/dotenv) - For Loading environment variables from a .env file into process.env
+- [ejs](https://github.com/mde/ejs) - For Rendering HTML string
+- [express](https://github.com/expressjs/express) - The server for handling and routing HTTP requests
+- [express-validator](https://github.com/express-validator/express-validator) - express.js Middleware for validator
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - For generating JWTs used by authentication
+- [mongoose](https://github.com/Automattic/mongoose) - For modeling and mapping MongoDB data to javascript
+- [nodemailer](https://github.com/nodemailer/nodemailer) - For Sending e-mails
+- [nodemailer-mailgun-transport](https://github.com/orliesaurus/nodemailer-mailgun-transport) - Transport plugin that goes with nodemailer to send email
+- [python-shell](https://github.com/extrabacon/python-shell) - For Running Python scripts
