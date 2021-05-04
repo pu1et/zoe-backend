@@ -16,7 +16,7 @@ app
  |- controllers       # All the Business logic
  |   |- auth.js         # User Account Management/Authentication
  |   |- gamer.js        # Patch/Update User's game information, Pick up/Use Game items, Earn Bobab points
- |   |- image.js        # Confirm Image upload
+ |   |- image.js        # Check if the image has been uploaded
  |   |- mindcloud.js    # Import Mindcloud image
  |   |- story.js        # View the diary, Create/Update/Delete diary
  |   |- tutorial.js     # View the tutorials, Add/View/Delete favorites
