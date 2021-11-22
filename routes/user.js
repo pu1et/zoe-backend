@@ -13,5 +13,6 @@ router.post('/login', postLoginValidator, userController.postLogin);
 
 /* sns 로그인 */
 router.post('/kakao', userController.postKakaoLogin);
+router.post('/naver', userController.postNaverLogin);
 
 module.exports = router;
