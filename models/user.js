@@ -27,19 +27,10 @@ const userSchema = new Schema(
         kakao: {
             id: String,
         },
-        /* 페이스북 */
-        facebook: {
-            id: String,
-        },
         /* 이메일 주소 */
         email: {
             type: String,
             unique: true,
-        },
-        /* 이메일 주소 인증 여부 */
-        isEmailVerified: {
-            type: Boolean,
-            default: false,
         },
         /* 닉네임 */
         nickName: {
@@ -59,19 +50,7 @@ const userSchema = new Schema(
             type: String,
             default: 'https://kr.object.ncloudstorage.com/because/image/Profile_default%403x.png',
         },
-        /* 서비스 이용약관 동의 */
-        agreeService: {
-            type: Boolean,
-        },
-        /* 개인정보 수집 및 이용 동의 */
-        agreePersonalInfo: {
-            type: Boolean,
-        },
-        /* 인증번호 */
-        token: String,
-        /* 인증번호 만료시점 */
-        tokenExpiration: String,
-
+        
         /**************************
          * 게임 관련
          **************************/
