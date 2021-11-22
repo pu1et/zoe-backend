@@ -142,12 +142,8 @@ exports.postKakaoLogin = (req, res, next) => {
     const { 
         id,
         nickname,
-        profile_image,
-        profile_needs_agreement,
         email, 
-        email_needs_agreement,
-        birthday,
-        birthyear, 
+        birthday, 
         gender
     } = req.body;
 
@@ -161,6 +157,7 @@ exports.postKakaoLogin = (req, res, next) => {
                     },
                     email,
                     nickName: nickname,
+                    birthday,
                     gender,
                 })
                 return user.save(function (err, user) {
