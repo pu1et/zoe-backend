@@ -13,8 +13,5 @@ router.post('/login', postLoginValidator, userController.postLogin);
 
 /* sns 로그인 */
 router.post('/kakao', userController.postKakaoLogin);
-router.post('/facebook', userController.postFacebookLogin);
-
-router.delete('/facebook/:facebookId', userController.deleteFacebookId);
 
 module.exports = router;
