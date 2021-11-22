@@ -10,7 +10,7 @@ const userSchema = new Schema(
         /* 로그인 타입 */
         method: {
             type: String,
-            enum: ['kakao'],
+            enum: ['local', 'kakao','naver'],
             required: true,
         },
         /* 자체 인증 */
@@ -25,6 +25,10 @@ const userSchema = new Schema(
         },
         /* 카카오 */
         kakao: {
+            id: String,
+        },
+        /* 네이버 */
+        naver: {
             id: String,
         },
         /* 이메일 주소 */
