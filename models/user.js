@@ -27,6 +27,15 @@ const userSchema = new Schema(
         kakao: {
             id: String,
         },
+        /* 이메일 주소 */
+        email: {
+            type: String,
+            unique: true,
+        },
+        /* 닉네임 */
+        nickName: {
+            type: String,
+        },
         /* 생년월일 */
         birthday: {
             type: Date,
@@ -41,7 +50,6 @@ const userSchema = new Schema(
             type: String,
             default: 'https://kr.object.ncloudstorage.com/because/image/Profile_default%403x.png',
         },
-
         /**************************
          * 게임 관련
          **************************/
