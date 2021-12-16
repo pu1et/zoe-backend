@@ -19,7 +19,6 @@ const httpsOptions = {
 require('dotenv').config();
 const app = express();
 
-const authRoutes = require('./routes/auth');
 const gamerRoutes = require('./routes/gamer');
 const imageRoutes = require('./routes/image');
 const mindcloudRoutes = require('./routes/mindcloud');
@@ -40,7 +39,6 @@ app.use((req, res, next) => {
 })
 
 // 라우팅 파트
-app.use('/auth', authRoutes);
 app.use('/gamer', gamerRoutes);
 app.use('/image', imageRoutes);
 app.use('/mindcloud', mindcloudRoutes);
