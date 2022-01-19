@@ -7,5 +7,6 @@ const router = express.Router();
 /* sns 로그인 */
 router.post('/kakao', userController.postKakaoLogin);
 router.post('/naver', userController.postNaverLogin);
+router.post('/apple', userController.postAppleLogin);
 
 module.exports = router;
