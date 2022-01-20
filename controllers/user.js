@@ -25,7 +25,7 @@ exports.postKakaoLogin = (req, res, next) => {
         gender
     } = req.body;
 
-    User.findOne({ $and: [{ 'kakao.id': id }, { email }]})
+    User.findOne({ 'kakao.id': id })
         .then((user) => {
             if (!user) {
                 user = new User({
@@ -92,7 +92,7 @@ exports.postKakaoLogin = (req, res, next) => {
         gender
     } = req.body;
 
-    User.findOne({ $and: [{ 'naver.id': id }, { email }]})
+    User.findOne({'naver.id': id })
         .then((user) => {
             if (!user) {
                 user = new User({
@@ -122,8 +122,8 @@ exports.postKakaoLogin = (req, res, next) => {
         })
         .then((userDoc) => {
             const user = userDoc;
-            
- 	    return res.json({
+ 	    
+	    return res.json({
                 isSuccess: true,
                 token: signToken(user),
                 tokenExpiration: Date.now() + 1000 * 60 * 60 * 24,
