@@ -7,7 +7,7 @@ const {
     postResetPasswordValidator,
     getCheckIdValidator,
     getCheckEmailValidator,
-    getCheckNickNameValidator,
+    getCheckNicknameValidator,
 } = require('../middleware/validator');
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router.get('/send-link', authController.getSendLink);
 router.get('/verify-link', authController.getVerifyLink);
 router.get('/check-id/:id', getCheckIdValidator, authController.getCheckId);
 router.get('/check-email/:email', getCheckEmailValidator, authController.getCheckEmail);
-router.get('/check-nickname/:nickName', getCheckNickNameValidator, authController.getCheckNickName);
+router.get('/check-nickname/:nickname', getCheckNicknameValidator, authController.getCheckNickname);
 router.get('/is-verified', authController.getIsEmailVerified);
 
 module.exports = router;

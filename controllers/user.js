@@ -101,7 +101,7 @@ exports.naverLogin = (req, res, next) => {
                         id,
                     },
                     email,
-                    nickName: nickname,
+                    nickname: nickname,
                     birthday,
                     gender,
                 })
@@ -160,7 +160,7 @@ exports.appleLogin = (req, res, next) => {
                         id,
                     },
                     email,
-                    nickName: nickname,
+                    nickname: nickname,
                     birthday,
                     gender,
                 })

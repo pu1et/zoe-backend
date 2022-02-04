@@ -40,7 +40,7 @@ const userSchema = new Schema(
             type: String,
         },
         /* 닉네임 */
-        nickName: {
+        nickname: {
             type: String,
         },
         /* 생년월일 */

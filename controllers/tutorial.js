@@ -163,7 +163,7 @@ exports.getComments = (req, res, next) => {
                     createdAt: el.createdAt,
                     authorInfo: {
                         profileImgUrl: el.authorInfo[0].profileImgUrl,
-                        nickName: el.authorInfo[0].nickName,
+                        nickname: el.authorInfo[0].nickname,
                     }
                 })
             })

@@ -300,7 +300,7 @@ exports.postResetPassword = (req, res, next) => {
                 data: {
                     id: result.id,
                     email: result.email,
-                    nickName: result.nickName,
+                    nickname: result.nickname,
                 },
             });
         })
@@ -399,16 +399,16 @@ exports.getCheckEmail = (req, res, next) => {
 
 /**
  * 닉네임 중복확인
- * @param req nickName : 중복 확인하려는 유저 닉네임
+ * @param req nickname : 중복 확인하려는 유저 닉네임
  * @param res              |status     |isSuccess  |message
  *            중복       :  |409        |false
  *            중복아님    :  |200        |true
  *            에러       :  |500        |false
  */
-exports.getCheckNickName = (req, res, next) => {
-    const { nickName } = req.params;
+exports.getCheckNickname = (req, res, next) => {
+    const { nickname } = req.params;
 
-    User.findOne({ nickName })
+    User.findOne({ nickname })
         .then((userDoc) => {
             if (userDoc) {
                 return res.status(409).json({

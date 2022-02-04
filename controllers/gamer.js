@@ -27,7 +27,7 @@ exports.getGamerInfo = (req, res, next) => {
 				message: 'Fetched gamer info successfully.',
 				gamer: {
 					_id: user._id,
-                    nickName: user.nickName,
+                    nickname: user.nickname,
                     profileImgUrl: user.profileImgUrl,
 					isInitial: user.isInitial,
                     score: user.score,
@@ -65,7 +65,7 @@ exports.updateGamerInfo = (req, res, next) => {
 	}
 
 	const {
-        nickName,
+        nickname,
         profileImgUrl,
         isInitial,
         isNotiAllowed,
@@ -73,7 +73,7 @@ exports.updateGamerInfo = (req, res, next) => {
 
 	User.findById(userId)
 		.then((user) => {
-			user.nickName = nickName ? nickName : user.nickName;
+			user.nickname = nickname ? nickname : user.nickname;
 			user.profileImgUrl = profileImgUrl ? profileImgUrl : user.profileImgUrl;
             user.isInitial = isInitial ? isInitial : user.isInitial;
             user.isNotiAllowed = isNotiAllowed ? isNotiAllowed : user.isNotiAllowed;
@@ -84,7 +84,7 @@ exports.updateGamerInfo = (req, res, next) => {
                 message: 'Gamer updated!', 
 				gamer: {
 					_id: user._id,
-					nickName: user.nickName,
+					nickname: user.nickname,
 					profileImgUrl: user.profileImgUrl,
                     isInitial: user.isInitial,
                     isNotiAllowed: user.isNotiAllowed,
@@ -222,7 +222,7 @@ exports.postUseItem = (req, res, next) => {
                 message: 'Gamer updated!', 
 				gamer: {
 					_id: user._id,
-                    nickName: user.nickName,
+					nickname: user.nickname,
                     profileImgUrl: user.profileImgUrl,
 					isInitial: user.isInitial,
                     score: user.score,

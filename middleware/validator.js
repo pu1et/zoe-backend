@@ -45,7 +45,7 @@ exports.postSignupValidator = [
             });
         })
         .normalizeEmail(),
-    body('nickName')
+    body('nickname')
         .not().isEmpty()
         .withMessage('닉네임을 입력해주세요.'),
     body('agreeService')
@@ -237,10 +237,10 @@ exports.getCheckEmailValidator = [
 
 /**
  * 닉네임 중복확인
- * GET /check-nickname/:nickName
+ * GET /check-nickname/:nickname
  */
-exports.getCheckNickNameValidator = [
-    param('nickName')
+exports.getCheckNicknameValidator = [
+    param('nickname')
         .not().isEmpty()
         .withMessage('닉네임을 입력해주세요.'),
 ];
