@@ -2,7 +2,7 @@
  * 계정 가입, 로그인 - local, sns
  */
 const User = require('../models/user');
-const { signToken } = require('../util/token');
+const {signToken} = require('../util/token');
 
 require('dotenv').config();
 
@@ -14,18 +14,18 @@ require('dotenv').config();
  *            실패 : |422        |false      |이미 다른 방식으로 가입한 유저
  *            에러 : |500        |false
  */
-exports.postKakaoLogin = (req, res, next) => {
-    console.log(req.url+"\n");
+exports.kakaoLogin = (req, res, next) => {
+    console.log(req.url + "\n");
     console.log(req.body);
-    const { 
+    const {
         id,
         nickname,
-	email,
-        birthday, 
+        email,
+        birthday,
         gender
     } = req.body;
 
-    User.findOne({ 'kakao.id': id })
+    User.findOne({'kakao.id': id})
         .then((user) => {
             if (!user) {
                 user = new User({
@@ -34,18 +34,18 @@ exports.postKakaoLogin = (req, res, next) => {
                         id,
                     },
                     email,
-                    nickName: nickname,
+                    nickname: nickname,
                     birthday,
                     gender,
                 })
-		user.save(function (err, user) {
-		    if (err) throw err;
-		    return user.body;
-		});
-		console.log("kakao user 생성 완료\n" + user);
+                user.save(function (err, user) {
+                    if (err) throw err;
+                    return user.body;
+                });
+                console.log("kakao user 생성 완료\n" + user);
             }
             /* 다른 방식으로 이미 가입된 메일인 경우 */
-	    if (user.method !== 'kakao') {
+            if (user.method !== 'kakao') {
                 return res.status(422).json({
                     isSuccess: false,
                     message: "이미 가입된 사용자 입니다.",
@@ -55,8 +55,8 @@ exports.postKakaoLogin = (req, res, next) => {
         })
         .then((userDoc) => {
             const user = userDoc;
-            
-	    return res.json({
+
+            return res.json({
                 isSuccess: true,
                 token: signToken(user),
                 tokenExpiration: Date.now() + 1000 * 60 * 60 * 24,
@@ -81,18 +81,18 @@ exports.postKakaoLogin = (req, res, next) => {
  *            실패 : |422        |false      |이미 다른 방식으로 가입한 유저
  *            에러 : |500        |false
  */
- exports.postNaverLogin = (req, res, next) => {
-    console.log(req.url+"\n");
+exports.naverLogin = (req, res, next) => {
+    console.log(req.url + "\n");
     console.log(req.body);
-    const { 
+    const {
         id,
         nickname,
-        email, 
-        birthday, 
+        email,
+        birthday,
         gender
     } = req.body;
 
-    User.findOne({'naver.id': id })
+    User.findOne({'naver.id': id})
         .then((user) => {
             if (!user) {
                 user = new User({
@@ -106,10 +106,10 @@ exports.postKakaoLogin = (req, res, next) => {
                     gender,
                 })
                 user.save(function (err, user) {
-		    if (err) throw err;
-		    return user.body;
-		});
-		console.log("naver user 생성 완료\n" + user);
+                    if (err) throw err;
+                    return user.body;
+                });
+                console.log("naver user 생성 완료\n" + user);
             }
             /* 다른 방식으로 이미 가입된 메일인 경우 */
             if (user.method !== 'naver') {
@@ -122,8 +122,8 @@ exports.postKakaoLogin = (req, res, next) => {
         })
         .then((userDoc) => {
             const user = userDoc;
- 	    
-	    return res.json({
+
+            return res.json({
                 isSuccess: true,
                 token: signToken(user),
                 tokenExpiration: Date.now() + 1000 * 60 * 60 * 24,
@@ -140,8 +140,8 @@ exports.postKakaoLogin = (req, res, next) => {
         });
 };
 
-exports.postAppleLogin = (req, res, next) => {
-    console.log(req.url+"\n");
+exports.appleLogin = (req, res, next) => {
+    console.log(req.url + "\n");
     console.log(req.body);
     const {
         id,
@@ -151,7 +151,7 @@ exports.postAppleLogin = (req, res, next) => {
         gender
     } = req.body;
 
-    User.findOne({ 'apple.id': id })
+    User.findOne({'apple.id': id})
         .then((user) => {
             if (!user) {
                 user = new User({
@@ -164,12 +164,12 @@ exports.postAppleLogin = (req, res, next) => {
                     birthday,
                     gender,
                 })
-                
-		user.save(function (err, user) {
+
+                user.save(function (err, user) {
                     if (err) throw err;
                     return user.body;
                 });
-		console.log("apple user 생성 완료\n" + user);
+                console.log("apple user 생성 완료\n" + user);
             }
             /* 다른 방식으로 이미 가입된 메일인 경우 */
             if (user.method !== 'apple') {
@@ -178,13 +178,13 @@ exports.postAppleLogin = (req, res, next) => {
                     message: "이미 가입된 사용자 입니다.",
                 });
             }
-            
-	    return user;
+
+            return user;
         })
         .then((userDoc) => {
             const user = userDoc;
-            
-	    return res.json({
+
+            return res.json({
                 isSuccess: true,
                 token: signToken(user),
                 tokenExpiration: Date.now() + 1000 * 60 * 60 * 24,
@@ -201,3 +201,25 @@ exports.postAppleLogin = (req, res, next) => {
         });
 };
 
+exports.updateNickname = (req, res, next) => {
+    console.log(req.url + "\n");
+    console.log(req.body);
+
+    const {method, nickname} = req.body;
+    var query = {'kakao.id': { $in : req.userId}}
+
+    if (method === 'naver') {
+        query = {'naver.id': req.userId};
+    } else if (method === 'apple') {
+        query = {'naver.id': req.userId};
+    }
+
+    User.update(
+        query, {$set : {'nickname': nickname}})
+        .catch((err) => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
