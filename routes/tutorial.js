@@ -14,6 +14,7 @@ router.get('/:tutorialId', isAuth, tutorialController.getTutorial);
 
 // GET /tutorial/comments/:tutorialId
 router.get('/comments/:tutorialId', isAuth, tutorialController.getComments);
+router.delete('/comments/:commentId', isAuth, tutorialController.deleteComment);
 
 // POST /tutorial
 router.post(

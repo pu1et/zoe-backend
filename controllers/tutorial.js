@@ -3,7 +3,7 @@ const {
     Comment
 } = require('../models/tutorial');
 const User = require('../models/user');
-const { populate } = require('../models/user');
+const {populate} = require('../models/user');
 const Mongoose = require('mongoose');
 
 /*
@@ -40,18 +40,18 @@ const tutList = [
 
 /**
  * 튜토리얼 리스트뷰
- * 
+ *
  * GET /tutorial/list/:listId
  */
 exports.getTutorialList = (req, res, next) => {
     // 데모 버전에서는 튜토리얼 로직이 아직 없음
     // 추후에 이 곳에 튜토리얼 리스트 카테고리별로 로직을 추가해야함.
 
-    const { listId } = req.params;
+    const {listId} = req.params;
     const numId = parseInt(listId);
 
     if (numId >= tutList.length || numId < 0) {
-        return res.status(422).json({ 
+        return res.status(422).json({
             isSuccess: false,
             message: 'Invalid list id!',
         });
@@ -66,9 +66,9 @@ exports.getTutorialList = (req, res, next) => {
                 thumbnailImg: tut.thumbnailImg,
                 title: tut.title,
             }))
-            return res.status(200).json({ 
+            return res.status(200).json({
                 message: 'Fetched tutorials successfully.',
-                prevData, 
+                prevData,
             });
         })
         .catch(err => {
@@ -77,22 +77,22 @@ exports.getTutorialList = (req, res, next) => {
                 error: '네트워크 문제 발생',
             });
         });
-        ;
+    ;
 };
 
 /**
  * 튜토리얼 상세뷰
- * 
+ *
  * GET /tutorial/:tutorialId
  */
 exports.getTutorial = (req, res, next) => {
-    const { tutorialId } = req.params;
+    const {tutorialId} = req.params;
 
     Tutorial.findById(tutorialId)
         .then(data => {
             delete data['comment'];
-            res.status(200).json({ 
-                message: 'Tutorial fetched.', 
+            res.status(200).json({
+                message: 'Tutorial fetched.',
                 tutorial: data
             });
         })
@@ -106,13 +106,13 @@ exports.getTutorial = (req, res, next) => {
 
 /**
  * 튜토리얼 댓글 가져오기
- * 
+ *
  * GET /tutorial/comments/:tutorialId
- * 
+ *
  */
 exports.getComments = (req, res, next) => {
     const currentPage = req.query.page || 1;
-    const { tutorialId } = req.params;
+    const {tutorialId} = req.params;
     const perPage = 10;
 
     Tutorial.aggregate([
@@ -130,10 +130,10 @@ exports.getComments = (req, res, next) => {
                 'comments.content': 1,
             }
         }, {
-            '$sort': { 'comments.createdAt': -1 }
-        }, { 
+            '$sort': {'comments.createdAt': -1}
+        }, {
             '$skip': (currentPage - 1) * perPage
-        }, { 
+        }, {
             '$limit': 10
         }, {
             '$lookup': {
@@ -148,40 +148,54 @@ exports.getComments = (req, res, next) => {
                 'comments': {
                     '$push': '$comments'
                 },
-                'count': { '$sum': 1 }
+                'count': {'$sum': 1}
             }
-        }], function(error, result) {
-            let returnComments = [];
+        }], function (error, result) {
+        let returnComments = [];
 
-            // 댓글에 필요한 정보 매핑 후, 리턴
-            if (result[0]) {
-                result[0].comments.map(el => {
-                    returnComments.push({
-                        content: el.content,
-                        _id: el._id,
-                        author: el.author,
-                        createdAt: el.createdAt,
-                        authorInfo: {
-                            profileImgUrl: el.authorInfo[0].profileImgUrl,
-                            nickName: el.authorInfo[0].nickName,
-                        }
-                    })
+        // 댓글에 필요한 정보 매핑 후, 리턴
+        if (result[0]) {
+            result[0].comments.map(el => {
+                returnComments.push({
+                    content: el.content,
+                    _id: el._id,
+                    author: el.author,
+                    createdAt: el.createdAt,
+                    authorInfo: {
+                        profileImgUrl: el.authorInfo[0].profileImgUrl,
+                        nickName: el.authorInfo[0].nickName,
+                    }
                 })
-            }
+            })
+        }
 
-            return res.status(200).json({ 
-                message: 'Comments fetched.',
-                page: currentPage,
-                comments: returnComments,
-            });
+        return res.status(200).json({
+            message: 'Comments fetched.',
+            page: currentPage,
+            comments: returnComments,
+        });
     })
 };
 
+exports.deleteComment = (req, res, next) => {
+    const {commentId} = req.params;
+
+    Comment.delete({
+        _id: commentId
+    }).catch((err) => {
+        return res.status(500).json({
+            isSuccess: false,
+            message: err.message,
+        })
+    });
+};
+
+
 /**
  * 튜토리얼 데이터 생성 (내부용)
- * 
+ *
  * POST /tutorial
- * 
+ *
  * @param req 튜토리얼 정보
  * @param res       |status
  *            성공 : |201
@@ -191,9 +205,9 @@ exports.createTutorial = (req, res, next) => {
     // 추후 관리자용 (튜토리얼 추가) 페이지를 만든다면,
     // 이 곳에 데이터 검증 및 관리자 체크 로직을 추가해야함.
 
-    const { 
-        title, 
-        thumbnailImg, 
+    const {
+        title,
+        thumbnailImg,
         mainImg,
         backImg,
         tags,
@@ -203,8 +217,8 @@ exports.createTutorial = (req, res, next) => {
     } = req.body;
 
     const tutorial = new Tutorial({
-        title, 
-        thumbnailImg, 
+        title,
+        thumbnailImg,
         mainImg,
         backImg,
         tags,
@@ -232,16 +246,16 @@ exports.createTutorial = (req, res, next) => {
 
 /**
  * 튜토리얼 댓글작성
- * 
+ *
  * POST /tutorial/comment/:tutorialId
- * 
+ *
  * @param req 튜토리얼아이디, 작성자, 댓글내용
  * @param res       |status
  *            성공 : |201
  */
 exports.postComment = (req, res, next) => {
-    const { tutorialId } = req.params;
-    const { content } = req.body;
+    const {tutorialId} = req.params;
+    const {content} = req.body;
 
     const comment = new Comment({
         author: req.userId,
@@ -270,16 +284,16 @@ exports.postComment = (req, res, next) => {
 
 /**
  * 튜토리얼 favorite 여부
- * 
+ *
  * GET /tutorial/is-favorite/:tutorialId
- * 
+ *
  * @param req 튜토리얼아이디, 유저
  * @param res             |status
  *            favor     : |200
  *            not favor : |409
  */
 exports.getIsFavorite = (req, res, next) => {
-    const { tutorialId } = req.params;
+    const {tutorialId} = req.params;
 
     User.findById(req.userId)
         .then(user => {
@@ -290,14 +304,14 @@ exports.getIsFavorite = (req, res, next) => {
                     message: "This tutorial isn't favorite",
                 });
             }
-            return res.status(200).json({ 
+            return res.status(200).json({
                 isFavorite: true,
                 message: "This tutorial is favorite",
             });
         })
         .catch(err => {
             if (!err.statusCode) {
-            err.statusCode = 500;
+                err.statusCode = 500;
             }
             next(err);
         });
@@ -305,9 +319,9 @@ exports.getIsFavorite = (req, res, next) => {
 
 /**
  * 튜토리얼 fovorite 추가
- * 
+ *
  * POST /tutorial/add-favorite/:tutorialId
- * 
+ *
  * @param req 튜토리얼아이디, 유저
  * @param res                  |status
  *            성공            : |201
@@ -315,7 +329,7 @@ exports.getIsFavorite = (req, res, next) => {
  *            이미 추가된 경우   : |409
  */
 exports.postAddFavorite = (req, res, next) => {
-    const { tutorialId } = req.params;
+    const {tutorialId} = req.params;
 
     Tutorial.findById(tutorialId)
         .then(tut => {
@@ -329,7 +343,7 @@ exports.postAddFavorite = (req, res, next) => {
         })
         .then(user => {
             const isExist = user.favoriteTuts.find(el => {
-                return el.toString()===tutorialId;
+                return el.toString() === tutorialId;
             });
             if (!isExist) {
                 user.favoriteTuts.push(tutorialId);
@@ -356,9 +370,9 @@ exports.postAddFavorite = (req, res, next) => {
 
 /**
  * 튜토리얼 fovorite 삭제
- * 
+ *
  * POST /tutorial/remove-favorite/:tutorialId
- * 
+ *
  * @param req 튜토리얼아이디, 유저
  * @param res                  |status
  *            성공            : |200
@@ -366,7 +380,7 @@ exports.postAddFavorite = (req, res, next) => {
  *            이미 없는 경우    : |409
  */
 exports.postRemoveFavorite = (req, res, next) => {
-    const { tutorialId } = req.params;
+    const {tutorialId} = req.params;
 
     Tutorial.findById(tutorialId)
         .then(tut => {
@@ -380,7 +394,7 @@ exports.postRemoveFavorite = (req, res, next) => {
         })
         .then(user => {
             const isExist = user.favoriteTuts.find(el => {
-                return el.toString()===tutorialId;
+                return el.toString() === tutorialId;
             });
             if (isExist) {
                 user.favoriteTuts.remove(tutorialId);
