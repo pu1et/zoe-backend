@@ -204,17 +204,12 @@ exports.appleLogin = (req, res, next) => {
 exports.updateNickname = (req, res, next) => {
     console.log(req.url + "\n");
     console.log(req.body);
+    console.log(req.userId);
 
     const {method, nickname} = req.body;
-    var query = {'kakao.id': { $in : req.userId}}
+    var query = {'_id': req.userId}
 
-    if (method === 'naver') {
-        query = {'naver.id': req.userId};
-    } else if (method === 'apple') {
-        query = {'naver.id': req.userId};
-    }
-
-    User.update(
+    User.updateOne(
         query, {$set : {'nickname': nickname}})
         .catch((err) => {
             if (!err.statusCode) {

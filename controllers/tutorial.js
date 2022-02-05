@@ -178,10 +178,17 @@ exports.getComments = (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
-    const {commentId} = req.params;
+    console.log(req.url + "\n");
+    console.log(req.params);
+    
+    const tutorialId = req.params.tutorialId;
+    const commentId = req.params.commentId;
 
-    Comment.delete({
-        _id: commentId
+    Tutorial.updateOne({"_id":tutorialId}, {
+       $pull: { 
+	       "comments" : {"_id": commentId}}}
+    ).then(function() {
+	    console.log("Comment deleted");
     }).catch((err) => {
         return res.status(500).json({
             isSuccess: false,
