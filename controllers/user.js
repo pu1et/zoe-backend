@@ -202,7 +202,7 @@ exports.appleLogin = (req, res, next) => {
 };
 
 exports.updateNickname = (req, res, next) => {
-    console.log(req.url + "\n");
+    console.log('update : ' + req.url);
     console.log(req.body);
     console.log(req.userId);
 
@@ -211,6 +211,11 @@ exports.updateNickname = (req, res, next) => {
 
     User.updateOne(
         query, {$set : {'nickname': nickname}})
+	.then(() => {
+            return res.json({
+                isSuccess: true,
+            });
+        })
         .catch((err) => {
             if (!err.statusCode) {
                 err.statusCode = 500;
@@ -218,3 +223,24 @@ exports.updateNickname = (req, res, next) => {
             next(err);
         });
 };
+
+exports.deleteUser = (req, res, next) => {
+    console.log('delete : ' + req.url);
+    console.log(req.userId);
+    
+    var query = {'_id' : req.userId };
+
+    User.deleteOne(query)
+    .then(() => {
+        return res.json({
+            isSuccess: true,
+        });
+    })
+    .catch((err) => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });;
+};
+

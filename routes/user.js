@@ -11,4 +11,6 @@ router.post('/naver', userController.naverLogin);
 router.post('/apple', userController.appleLogin);
 
 router.patch('/nickname', isAuth, userController.updateNickname);
+
+router.delete('', isAuth, userController.deleteUser);
 module.exports = router;
