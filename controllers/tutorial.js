@@ -188,7 +188,8 @@ exports.deleteComment = (req, res, next) => {
        $pull: { 
 	       "comments" : {"_id": commentId}}}
     ).then(function() {
-	    console.log("Comment deleted");
+	    console.log("Comment deleted.");
+        return res.status(200).json({ message: 'Deleted comment.' });
     }).catch((err) => {
         return res.status(500).json({
             isSuccess: false,
