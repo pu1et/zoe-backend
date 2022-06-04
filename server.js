@@ -5,16 +5,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-// for ssl
-const https = require('https');
-const fs = require('fs');
-const httpsOptions = {
-    key: fs.readFileSync("/etc/apache2/www.zoesbreath.com.pem"),
-    cert: fs.readFileSync("/etc/apache2/www.zoesbreath.com.pem"),
-	requestCert: true,
-	  rejectUnauthorized: false,
-};
-
 // 초기화 파트
 require('dotenv').config();
 const app = express();
@@ -59,7 +49,7 @@ app.set('views', path.join(__dirname,'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
 
-const server = https.createServer(httpsOptions, app)
+const server = http.createServer(app)
 
 // 서버 실행
 mongoose
