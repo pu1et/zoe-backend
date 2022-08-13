@@ -111,6 +111,9 @@ exports.getTutorial = (req, res, next) => {
  *
  */
 exports.getComments = (req, res, next) => {
+    console.log(req.url + "\n");
+    console.log(req.params);
+
     const currentPage = req.query.page || 1;
     const {tutorialId} = req.params;
     const perPage = 10;
@@ -156,6 +159,7 @@ exports.getComments = (req, res, next) => {
         // 댓글에 필요한 정보 매핑 후, 리턴
         if (result[0]) {
             result[0].comments.map(el => {
+		console.log(el);
                 returnComments.push({
                     content: el.content,
                     _id: el._id,
@@ -184,10 +188,12 @@ exports.deleteComment = (req, res, next) => {
     const tutorialId = req.params.tutorialId;
     const commentId = req.params.commentId;
 
-    Tutorial.updateOne({"_id":tutorialId}, {
-       $pull: { 
-	       "comments" : {"_id": commentId}}}
-    ).then(function() {
+    Tutorial.findById(tutorialId)
+    .then(tutorial => {
+        tutorial.comments.pull({"_id": commentId});
+        tutorial.commentCount -= 1;
+        return tutorial.save();
+    }).then(function() {
 	    console.log("Comment deleted.");
         return res.status(200).json({ message: 'Deleted comment.' });
     }).catch((err) => {
@@ -197,7 +203,6 @@ exports.deleteComment = (req, res, next) => {
         })
     });
 };
-
 
 /**
  * 튜토리얼 데이터 생성 (내부용)
